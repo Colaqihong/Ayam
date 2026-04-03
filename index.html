@@ -7,22 +7,58 @@
 body { font-family: Arial; background: linear-gradient(to bottom, #a8e6cf, #dcedc1); text-align:center; padding:30px; }
 .container { max-width:700px; margin:auto; background:#ffffffee; padding:25px; border-radius:15px; }
 .word { font-size:50px; font-weight:bold; }
-.trace-area { position:relative; width:420px; height:100px; margin:30px auto; }
-.trace-guide { position:absolute; width:100%; height:100%; display:flex; align-items:center; justify-content:center; font-size:56px; font-weight:bold; letter-spacing:6px; color:transparent; -webkit-text-stroke:2px #999; }
-#traceCanvas { position:absolute; width:420px; height:100px; border:1px dashed #ccc; }
+
+.trace-area {
+  position:relative;
+  width:420px;
+  height:100px;
+  margin:30px auto;
+}
+
+.trace-guide {
+  position:absolute;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:56px;
+  font-weight:bold;
+  letter-spacing:6px;
+  color:transparent;
+  -webkit-text-stroke:2px #999;
+}
+
+#traceCanvas {
+  position:absolute;
+  top:0;
+  left:0;
+  width:420px;
+  height:100px;
+  z-index:2;
+  border:1px dashed #ccc;
+}
+
+img { width:200px; border-radius:12px; }
+
 button { padding:12px 20px; margin:10px; border-radius:8px; border:none; }
 .check-btn { background:#4CAF50;color:white; }
 .clear-btn { background:#E74C3C;color:white; }
+
 .result { font-size:28px; }
 </style>
 </head>
+
 <body>
 <div class="container">
 <h1>Writing Practice 🐔</h1>
 
 <div class="word">CHICKEN</div>
 
-<img src="https://images.unsplash.com/photo-1589927986089-35812388d1f4?q=80&w=400">
+<!-- 👉 建议你改成本地图片 -->
+<img src="chicken.jpg">
 
 <div class="trace-area">
 <div class="trace-guide">CHICKEN</div>
@@ -38,20 +74,24 @@ button { padding:12px 20px; margin:10px; border-radius:8px; border:none; }
 <script>
 const canvas=document.getElementById("traceCanvas");
 const ctx=canvas.getContext("2d");
+
 let drawing=false,totalLength=0,lastX=0,lastY=0;
-ctx.lineWidth=4; ctx.lineCap="round";
+ctx.lineWidth=4;
+ctx.lineCap="round";
 
 function draw(x,y){
 let dx=x-lastX,dy=y-lastY;
 totalLength+=Math.sqrt(dx*dx+dy*dy);
 ctx.lineTo(x,y);
 ctx.stroke();
-lastX=x; lastY=y;
+lastX=x;
+lastY=y;
 }
 
 canvas.onmousedown=e=>{
 drawing=true;
-lastX=e.offsetX; lastY=e.offsetY;
+lastX=e.offsetX;
+lastY=e.offsetY;
 ctx.beginPath();
 ctx.moveTo(lastX,lastY);
 };
