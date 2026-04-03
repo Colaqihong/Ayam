@@ -19,9 +19,10 @@ button { padding:12px 20px; margin:10px; border-radius:8px; border:none; }
 <body>
 <div class="container">
 <h1>Writing Practice 🐔</h1>
+
 <div class="word">CHICKEN</div>
 
-<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5c/Chicken_in_field.jpg/320px-Chicken_in_field.jpg">
+<img src="https://images.unsplash.com/photo-1589927986089-35812388d1f4?q=80&w=400">
 
 <div class="trace-area">
 <div class="trace-guide">CHICKEN</div>
@@ -30,6 +31,7 @@ button { padding:12px 20px; margin:10px; border-radius:8px; border:none; }
 
 <button class="check-btn" onclick="checkWriting()">Check</button>
 <button class="clear-btn" onclick="clearCanvas()">Clear</button>
+
 <div id="result" class="result"></div>
 </div>
 
@@ -39,20 +41,44 @@ const ctx=canvas.getContext("2d");
 let drawing=false,totalLength=0,lastX=0,lastY=0;
 ctx.lineWidth=4; ctx.lineCap="round";
 
-function draw(x,y){let dx=x-lastX,dy=y-lastY;totalLength+=Math.sqrt(dx*dx+dy*dy);ctx.lineTo(x,y);ctx.stroke();lastX=x;lastY=y;}
+function draw(x,y){
+let dx=x-lastX,dy=y-lastY;
+totalLength+=Math.sqrt(dx*dx+dy*dy);
+ctx.lineTo(x,y);
+ctx.stroke();
+lastX=x; lastY=y;
+}
 
-canvas.onmousedown=e=>{drawing=true;lastX=e.offsetX;lastY=e.offsetY;ctx.beginPath();ctx.moveTo(lastX,lastY);}
-canvas.onmousemove=e=>{if(drawing)draw(e.offsetX,e.offsetY);}
+canvas.onmousedown=e=>{
+drawing=true;
+lastX=e.offsetX; lastY=e.offsetY;
+ctx.beginPath();
+ctx.moveTo(lastX,lastY);
+};
+
+canvas.onmousemove=e=>{
+if(drawing) draw(e.offsetX,e.offsetY);
+};
+
 canvas.onmouseup=()=>drawing=false;
 
-function clearCanvas(){ctx.clearRect(0,0,420,100);totalLength=0;result.innerHTML="";}
+function clearCanvas(){
+ctx.clearRect(0,0,420,100);
+totalLength=0;
+result.innerHTML="";
+}
 
 const successAudio=new Audio('button-37a.mp3');
 const failAudio=new Audio('beep-03.mp3');
 
 function checkWriting(){
-if(totalLength>900){result.innerHTML="Well done! 🎉";successAudio.play();}
-else{result.innerHTML="Try again 😢";failAudio.play();}
+if(totalLength>900){
+result.innerHTML="Well done! 🎉";
+successAudio.play();
+}else{
+result.innerHTML="Try again 😢";
+failAudio.play();
+}
 }
 </script>
 </body>
